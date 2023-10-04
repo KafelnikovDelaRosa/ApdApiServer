@@ -23,7 +23,7 @@ app.post('/save-code',(req,res)=>{
     return res.json({
         success:true,
     });*/
-    exec("ls",(error,stdout,stderr)=>{
+    exec("cd codeUploads && ls",(error,stdout,stderr)=>{
         if(error){
             console.error(`exec error: ${error}`);
             /*return res.json({
