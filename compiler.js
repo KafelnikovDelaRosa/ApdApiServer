@@ -13,7 +13,7 @@ app.use(
 );
 app.use(bodyParser.json());
 app.post('/save-code',(req,res)=>{
-    const {content,language}=req.body;
+    /*const {content,language}=req.body;
     fs.writeFile(`temp/index.${language}`,content,err=>{
         if(err){
             console.log(err);
@@ -22,6 +22,21 @@ app.post('/save-code',(req,res)=>{
     })
     return res.json({
         success:true,
+    });*/
+    exec("ls",(error,stdout,stderr)=>{
+        if(error){
+            console.error(`exec error: ${error}`);
+            /*return res.json({
+                success:false,
+                error:stderr
+            });*/
+        }
+        console.log(stdout);
+        console.log(stderr);
+        /*return res.json({
+            success:true,
+            result:stdout
+        });*/
     });
 });
 app.post('/run-code',(req,res)=>{
