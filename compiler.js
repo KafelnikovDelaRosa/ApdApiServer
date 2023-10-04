@@ -14,7 +14,7 @@ app.use(
 app.use(bodyParser.json());
 app.post('/save-code',(req,res)=>{
     const {content,language}=req.body;
-    fs.writeFile(`codeUploads/index.${language}`,content,err=>{
+    fs.writeFile(`temp/index.${language}`,content,err=>{
         if(err){
             console.log(err);
         }
