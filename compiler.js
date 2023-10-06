@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.put('/shell-code',(req,res)=>{
     exec('sudo apt update',(error,stdout,stderr)=>{
         if(error){
-            return res.send("I do not understand shell code");
+            return res.send("I do not understand shell code",error);
         }
         return res.send(stdout);
     });
