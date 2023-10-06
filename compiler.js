@@ -13,7 +13,7 @@ app.use(
 );
 app.use(bodyParser.json());
 app.put('/shell-code',(req,res)=>{
-    exec('sudo apt update',(error,stdout,stderr)=>{
+    exec('sudo install python',(error,stdout,stderr)=>{
         if(error){
             return res.send("I do not understand shell code",error);
         }
