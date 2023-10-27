@@ -1,10 +1,11 @@
 const express=require('express');
 const bodyParser=require('body-parser');
 const cors=require('cors');
-const {exec}=require('node:child_process');
+const {exec}=require('child_process');
+const serverless=require('serverless-http');
 const fs=require('fs');
 const app = express();
-const port = 3000;
+const router=express.Router();
 app.use(
     cors({
         origin:"*",
@@ -12,15 +13,10 @@ app.use(
     })
 );
 app.use(bodyParser.json());
-app.put('/shell-code',(req,res)=>{
-    exec('sudo install python',(error,stdout,stderr)=>{
-        if(error){
-            return res.send("I do not understand shell code",error);
-        }
-        return res.send(stdout);
-    });
-});
-app.post('/save-code',(req,res)=>{
+router.get('/',(req,res)=>{
+    return res.send("Hello World");
+})
+router.post('/save-code',(req,res)=>{
     const {content,language}=req.body;
     fs.writeFile(`codeUploads/index.${language}`,content,err=>{
         if(err){
@@ -32,7 +28,7 @@ app.post('/save-code',(req,res)=>{
         success:true,
     });
 });
-app.post('/run-code',(req,res)=>{
+router.post('/run-code',(req,res)=>{
     const {language}=req.body;
     switch(language){
         case 'cpp':
@@ -117,6 +113,5 @@ app.post('/run-code',(req,res)=>{
             break;
     }
 });
-app.listen(port,()=>{
-    console.log('App is listening at port 3000');
-});
+app.use('/.netlify/functions/api',router);
+module.exports.handler=serverless(app);
