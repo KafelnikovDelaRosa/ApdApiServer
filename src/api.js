@@ -72,7 +72,7 @@ router.post('/run-code',(req,res)=>{
                         error:stderr
                     });
                 }
-                console.log(stdout);
+                console.log(stdout)
                 return res.json({
                     success:true,
                     result:stdout
